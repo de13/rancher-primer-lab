@@ -71,6 +71,7 @@ Repete the previous step for the two other VMs.
 ![all VMs](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig15.png)
 
 **3. Install RancherOS**
+
 Boot the first VM. As you can see in fig16, the DHCP set an IP adress for the host (eg. 10.10.2.4). Write down this adresse.
 ![IP](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig16.png)
 Change/assign a password to the user rancher:
