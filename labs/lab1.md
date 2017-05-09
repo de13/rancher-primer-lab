@@ -20,7 +20,11 @@ This lab is planned to run on VirtualBox v5. The underlaying machine must have a
 
 Each VM will run RancherOS v1.0.1 (you can download the iso on [github.com/rancher/os](https://github.com/rancher/os))
 
-## Steps
+In the course material, you'll find the private key (`rancher-primer-lab.pem`) to access to VMs without password once they will be set up. [Download](https://github.com/de13/rancher-primer-lab/blob/master/keys/rancher-primer-lab.pem).
+
+The course material also provides you with a `config` file to falicitate access to VMs over `ssh`. Copy this file to `~/.ssh/config` on your computer, and set perms to 0600 on the file. [Download](https://github.com/de13/rancher-primer-lab/blob/master/config).
+
+## Steps to create VMs
 
 **1. Create a NAT Network in VirtualBox**
 

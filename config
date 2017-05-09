@@ -1,0 +1,24 @@
+#### RANCHER PRIMER LABS ####
+Host jumphost
+ User rancher
+ Port 10022
+ IdentityFile ~/.ssh/rancher-primer-lab.pem
+ HostName 127.0.0.1
+
+Host rha-1
+ User rancher
+ Port 11022
+ IdentityFile ~/.ssh/rancher-primer-lab.pem
+ HostName 127.0.0.1
+
+Host rha-2
+ User rancher
+ Port 12022
+ IdentityFile ~/.ssh/rancher-primer-lab.pem
+ HostName 127.0.0.1
+
+Host rha-3
+ User rancher
+ Port 13022
+ IdentityFile ~/.ssh/rancher-primer-lab.pem
+ HostName 127.0.0.1
