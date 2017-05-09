@@ -1,0 +1,15 @@
+#cloud-config
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO0UvIM99vYTz2aNm1KpcazxoSjhRLixJerHeOJ2qZdYhaxfPkabE2j14IL+f+pV6xZWypVmQ20pk78FqAHey7cGasfZeEY1VT9EglSGm6OuFSlh62f8J4Im/z7JQxjpacYJ97+UFL6Fj516+gZPmRsTL+UQ0A1Eai6HJZIscO8Povg9z87Dewp1ayUp3pHwo9lV3s5bH9wjoe6LyYOE66nFugPxuDoQmXS5FcYahdi7lK5AIla4hx6+2Gpgop8cFpk+FSOPxF6ectc1BA1c8pv/ZpTvnIVvIUTrUpVhxJ3jzuwfcpZOEhP5SQnGhpgSFQ4WJiENllgYXJheFHIAnN rancherPrimerLabPublicKeys
+hostname: rha-2
+rancher:
+  network:
+    interfaces:
+      eth*:
+        dhcp: false
+      eth0:
+        address: 10.10.2.102/24
+        gateway: 10.10.2.1
+    dns:
+      nameservers:
+        - 10.10.2.254
