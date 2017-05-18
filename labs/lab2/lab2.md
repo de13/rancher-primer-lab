@@ -1,6 +1,6 @@
-#Lab2
+# Lab2
 
-#Network topology
+## Network topology
 
 ```
                       +----------------+
@@ -10,7 +10,7 @@
                       +----------------+
 ```
 
-#Info
+## Info
 This lab is planned to run on VirtualBox v5. The underlaying machine must have at least **2CPU** and **8Go Ram**.
 
 The VM will run RancherOS v0.8.1. (OS installation is part of this lab.)
@@ -19,7 +19,7 @@ In the course material, you'll find the private key (`rancher-primer-lab.pem`) t
 
 The course material also provides you with a `config` file to falicitate access to VMs over `ssh`. Copy this file to `~/.ssh/config` on your computer, and **set perms to 0600** on the file. [Download](https://github.com/de13/rancher-primer-lab/blob/master/config) the file.
 
-#Lab objectives
+## Lab objectives
 
 The first objective is to deploy Gitlab from the community catalog.
 
@@ -29,7 +29,7 @@ You will create a resilient application (two nginx servers behind a load balance
 
 This step completed, you'll remove your stack and deploy your application from your catalog. You'll then create a new version of your application, and update your stack using rancher update mechanisme.
 
-##Deploy Gitlab
+## Deploy Gitlab
 
 In order to use Gitlab, you need git; but git is not present on rancher os, and you cannot install any package in the default console.
 
@@ -115,7 +115,7 @@ Clone your repo on your host, and follow Gitlab instructions to initialize the r
 
 ![fig15](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab2/fig15.png)
 
-##Create a resilient app
+## Create a resilient app
 
 First, create an empty stack
 
@@ -157,7 +157,7 @@ You can have a look http://localhost:8181
 
 ![fig25](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab2/fig25.png)
 
-##Create a catalog entry
+## Create a catalog entry
 
 Go to config tab
 
@@ -223,7 +223,7 @@ And you can check in the browser that it's the same than the one deployed by han
 
 ![fig36](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab2/fig36.png)
 
-##Create a new version of your app
+## Create a new version of your app
 
 Now, back to the CLI, in `~/rancher-catalog/templates/mycoolapp` copy the folder 0 to 1
 

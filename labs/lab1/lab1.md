@@ -1,6 +1,6 @@
-#Lab1
+# Lab1
 
-#Network topology
+## Network topology
 
 ```
                       +----------------+
@@ -10,7 +10,7 @@
                       +----------------+
 ```
 
-#Info
+## Info
 This lab is planned to run on VirtualBox v5. The underlaying machine must have at least **2CPU** and **8Go Ram**.
 
 The VM will run RancherOS v0.8.1. (OS installation is part of this lab.)
@@ -19,7 +19,7 @@ In the course material, you'll find the private key (`rancher-primer-lab.pem`) t
 
 The course material also provides you with a `config` file to falicitate access to VMs over `ssh`. Copy this file to `~/.ssh/config` on your computer, and **set perms to 0600** on the file. [Download](https://github.com/de13/rancher-primer-lab/blob/master/config) the file.
 
-##Lab objectives
+## Lab objectives
 
 You'll first create a VM to install Rancher OS.
 
@@ -27,7 +27,7 @@ Once, install rancher sever.
 
 And finally, add a host to Cattle to create your first environment.
 
-##Create your Virtual Machine
+## Create your Virtual Machine
 
 Launch VirtualBox
 
@@ -72,7 +72,7 @@ Add these ports
 
 ![fig11](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig11.png)
 
-##Install rancher os
+## Install rancher os
 
 You can now boot the VM
 
@@ -121,7 +121,7 @@ Remove iso from optical disk slot, then start the VM
 
 ![fig19](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig19.png)
 
-##Install rancher server
+## Install rancher server
 
 Connect to the server through ssh
 
@@ -170,7 +170,7 @@ docker run -d --restart=unless-stopped \
 
 After a while, your server is ready, and you can connect to http://localhost:8080 with your browser
 
-#Create your first environment
+## Create your first environment
 
 ![fig25](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig25.png)
 
