@@ -1,221 +1,205 @@
-# Lab1
+#Lab1
 
-## Network topology
+#Network topology
+
 ```
----------------------
-|      Jumphost     |
-|   10.10.2.254/24  |-----------------
-| dnsmasq + mariadb |                 \
----------------------                  \
-         |           \                  \
-------------------  ------------------  ------------------
-|      RH-1      |  |      RH-1      |  |      RH-1      |
-| 10.10.2.101/24 |  | 10.10.2.101/24 |  | 10.10.2.101/24 |
-|     Rancher    |  |     Rancher    |  |     Rancher    |
-------------------  ------------------  ------------------
+                      +----------------+
+                      |   VirtualBox   |
+                      |  10.0.2.15/32  |
+                      |    Rancher     |
+                      +----------------+
 ```
 
-## Info
-This lab is planned to run on VirtualBox v5. The underlaying machine must have at least **2CPU** and **4Go Ram**.
+#Info
+This lab is planned to run on VirtualBox v5. The underlaying machine must have at least **2CPU** and **8Go Ram**.
 
-Each VM will run RancherOS v1.0.1 (you can download the iso on [github.com/rancher/os](https://github.com/rancher/os))
+The VM will run RancherOS v0.8.1. (OS installation is part of this lab.)
 
-In the course material, you'll find the private key (`rancher-primer-lab.pem`) to access to VMs without password once they will be set up. [Download](https://github.com/de13/rancher-primer-lab/blob/master/keys/rancher-primer-lab.pem) the file in `~/.ssh/`.
+In the course material, you'll find the private key (`rancher-primer-lab.pem`) to access to VMs without password once they will be set up. [Download](https://github.com/de13/rancher-primer-lab/blob/master/keys/rancher-primer-lab.pem) the file in `~/.ssh/` and set rights to 0400.
 
 The course material also provides you with a `config` file to falicitate access to VMs over `ssh`. Copy this file to `~/.ssh/config` on your computer, and **set perms to 0600** on the file. [Download](https://github.com/de13/rancher-primer-lab/blob/master/config) the file.
 
-## Steps to create VMs
+##Lab objectives
 
-**1. Create a NAT Network in VirtualBox**
+You'll first create a VM to install Rancher OS.
 
-Depending on your OS, in general settings, then Networks.
+Once, install rancher sever.
 
-![NAT Network](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig01.png)
+And finally, add a host to Cattle to create your first environment.
 
-Create a network called "rancher-lab-primer" or something else, the name doesn't matter. More important is the **CDIR: 10.10.2.0/24**. Enable the DHCP.
+##Create your Virtual Machine
 
-![10.10.2.0/24](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig02.png)
+Launch VirtualBox
 
-Then configure the **Port Forwarding** as follow:
+![fig01](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig01.png)
 
-![Port Forwarding](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig03.png)
+Create a new Linux machine
 
-You have to use **_exactly_** these ports:
+![fig02](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig02.png)
 
-|Name|Protocol|Host IP|Host Port|Guest IP|Guest Port| 
-|---|---|---|---|---|---|
-|ssh-jumphost|TCP||10022|10.10.2.254|22|
-|ssh-rha-1|TCP||11022|10.10.2.101|22|
-|ssh-rha-2|TCP||12022|10.10.2.102|22|
-|ssh-rha-3|TCP||13022|10.10.2.103|22|
+Set the memory to 6Go
 
-**2. Create your VMs**
+![fig03](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig03.png)
 
-Start with the **jumphost** (use any kind of Linux version, it doesn't matter, but it can help visually to change version between one and the other).
+Create a new virtual disk
 
-![jumphost](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig04.png)
+![fig04](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig04.png)
 
-1024 in memory size is enough.
+Use VDI
 
-![Memory](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig05.png)
+![fig05](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig05.png)
 
-Create a vitual disk.
+Dynamically allocated is fine
 
-![Virtual disk](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig06.png)
+![fig06](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig06.png)
 
-VDI is correct.
+Set the size to 20Go
 
-![VDI](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig07.png)
+![fig07](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig07.png)
 
-Dynamically allocated is better.
+The server is almost ready
+![fig08](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig08.png)
 
-![Dynamically](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig08.png)
+Go to settings, then Storage tab to add your iso
 
-Set his size to 20GB to be comfortable.
+![fig09](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig09.png)
 
-![Size](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig09.png)
+In Network tab, click on Port Forwarding
 
-The first step is completed.
+![fig10](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig10.png)
 
-![Created](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig10.png)
+Add these ports
 
-Now go on setting, and Network. Choose the NAT Network previously created (eg. rancher-primer-lab)
+![fig11](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig11.png)
 
-![NAT Network](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig11.png)
+##Install rancher os
 
-In the storage tab, insert the iso.
+You can now boot the VM
 
-![ISO](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig12.png)
+![fig12](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig12.png)
 
-The next step consist in cloning the first VM. The clone's name should be rha-1, and you have to reinitialize the MAC adresse.
+First, change rancher password
 
-![Clone](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig13.png)
+![fig13](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig13.png)
 
-Create a full clone.
+Then connect to VM through ssh
 
-![Full clone](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig14.png)
+```
+$ ssh -p 22022 rancher@localhost
+```
 
-Repete the previous step for the two other VMs.
+![fig14](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig14.png)
 
-![all VMs](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig15.png)
+Create a `cloud-config.yml` with the public key provided in the course material
 
-**3. Install RancherOS**
+```
+#cloud-config
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5rrLFPwMsj2gCwRxaWhp3bqMaiieulEu9RuvUdr3Eqcq14py8rwdhB0L4hU7jM3I4/dMFb1/rObkni8eG5L8CMekRo4zet6T4EnKoW2eID/qQ18xa5/escDuRn0DFvz9vvXmJyc8IM2beAn4RCjLKVb4iKeh8Fmq7ntW+2loXVLFecNJQn10kBmIhgo4fLOZRmnLbABQoNCwPW2WmXjpkYkNZPW7+wOTKNCELyWOaBwlTjzLu3hdWVZgZHEzMLskELl96y//QVDKJ4Wif8KOqu5vKeP2lbsJ2Niq8/vWH94FqHeunE3LsEuzVHWEVtnTDMoUXz3PlVXixEEAv4z4X
+hostname: rancher
+```
 
-Boot the first VM. As you can see in fig16, the DHCP set an IP adress for the host (eg. 10.10.2.4). Write down this adresse.
+![fig15](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig15.png)
 
-![IP](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig16.png)
+Install rancheros v0.8.1
 
-Change/assign a password to the user rancher:
+```
+$ sudo ros install -c cloud-config.yml \
+  -d /dev/sda -i rancher/os:v0.8.1
+```
+![fig16](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig16.png)
 
-`$ sudo passwd rancher`
+Answer no to "Continue with reboot", and halt the server manually
+
+![fig17](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig17.png)
+
+Power off the VM
+
+![fig18](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig18.png)
+
+Remove iso from optical disk slot, then start the VM
+
+![fig19](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig19.png)
+
+##Install rancher server
+
+Connect to the server through ssh
+
+```
+$ ssh -p 22022 -i rancher-primer-lab.pem rancher@localhost
+```
+
+![fig20](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig20.png)
+
+Launch your first container: MariaDB
+
+```
+docker run -d -p 3306:3306 --restart=unless-stopped \
+  -e MYSQL_DATABASE=rancher \
+  -e MYSQL_USER=rancher \
+  -e MYSQL_PASSWORD=rancher \
+  -e MYSQL_ALLOW_EMPTY_PASSWORD=true mariadb:5.5
+```
+
+![fig21](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig21.png)
+
+You can then have a look to logs to check if mariadb accept connections 
+
+![fig22](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig22.png)
+
+Once it's ready, check your ip address
+
+```
+$ ip a s eth0
+```
+
+You should have 10.0.2.15
+
+![fig23](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig23.png)
+
+It's time to start rancher/server
+
+```
+docker run -d --restart=unless-stopped \
+  -p 8080:8080 rancher/server:v1.4.3 \
+  --db-host 10.0.2.15 --db-port 3306 \
+  --db-user cattle --db-pass cattle --db-name cattle
+```
+
+![fig24](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig24.png)
+
+After a while, your server is ready, and you can connect to http://localhost:8080 with your browser
+
+#Create your first environment
+
+![fig25](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig25.png)
+
+In the first tab, you can check your default environment is Cattle. Don't worry about the unhealthy status, it's because the first host is not yet registered
+
+![fig26](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig26.png)
+
+First step, in Admin tab and Settings, you have to set the server API address (clients use it to connect to the server). By default, Rancher offers the URL you use to connect to; but as we use NAT, it's not the correct one. Use http://10.0.2.15:8080 instead
  
-![password](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig17.png)
+![fig27](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig27.png)
 
-Add a temporary rule in port forwarding for this IP adresse:
+Then, in Infrastructure tab, choose Add Host
 
-![Add port](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig18.png)
+![fig28](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig28.png)
 
-You can now access to the VM over ssh with the password you set:
+You'll use the same host for the client than the server; so you have to specify the client address ip in the forth field
 
-`$ ssh -p 22222 rancher@localhost`
+![fig29](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig29.png)
 
-![ssh](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig19.png)
+Copy the command, and past it in the VM command line
 
-Use the cloud-config file provided on Github for jumphost:
+![fig30](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig30.png)
 
-`$ vi cloud-config.yml`
+![fig31](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig31.png)
 
-Then paste the content of the file.
+Close the Add Host page, and after a while, you'll see your client appears
 
-![cloud-config](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig20.png)
+![fig32](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig32.png)
 
-Install RancherOS with the following command:
+All services start, and finally become ready
 
-`$ sudo ros install -c cloud-config.yml -d /dev/sda`
-
-![ros](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig21.png)
-
-Don't reboot immediatly the VM.
-
-![Install](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig22.png)
-
-Instead of that, use `$ sudo halt` to halt the VM.
-
-![halt](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig23.png)
-
-Then you can poweroff the VM.
-
-![poweroff](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig24.png)
-
-The iso isn't ejected automatically, so do it by hand.
-
-![remove iso](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig25.png)
-
-Then you can poweron the VM. As you could see, the IP adresse is the one we assign to it.
-
-![poweron](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig26.png)
-
-With the `~/.ssh/config` file provided on Github (set the perms to 0600 on the file), you can now normaly access the VM without password just by using the command:
-
-`$ ssh jumphost`
-
-![jumphost](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig27.png)
-
-**4. Set up the new services**
-
-Jumphost will run two services:
-
- - DNS (dnsmasq)
- - Database (MariaDB)
-
-To set up the dns, use the following command:
-
-```
-$ docker run -d --restart=unless-stopped \
-  -p 53/53/tcp -p 53/53/udp --cap-add=NET_ADMIN \
-  de13/primer-dns
-```
-
-![dnsmasq](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig28.png)
-
-Do the same with MariaDB:
-
-```
-$ docker run -d --restart=unless-stopped -p 3306:3306 \
-  -e MYSQL_DATABASE=cattle \
-  -e MYSQL_USER=cattle \
-  -e MYSQL_PASSWORD=cattle \
-  -e MYSQL_ALLOW_EMPTY_PASSWORD=true \
-  mariadb:5.5
-```
-
-![jumphost](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig29.png)
-
-**5. Set up Rancher**
-Now, we're ready to start Rancher server. First, we will connect on rha-1. Once connected, run to following command to start Rancher server:
-
-```
-$ docker run -d --restart=unless-stopped \
-  -p 8080:8080 -p 9345:9345 rancher/server \
-  --db-host jumphost.example.com --db-port 3306 \
-  --db-user cattle --db-pass cattle --db-name cattle \
-  --advertise-address 10.10.2.101
-```
-
-This configuration is an HA setup: the flag advertise address and the 9345:9345 port map, we have the abaility to add further nodes later to the cluster.
-
-![rancher/server](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig30.png)
-
-While rancher/server is downloading, we will add a port redirection in VirtualBox to access to Rancher Web UI.
-
-![new redirection](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig31.png)
-
-Once the server is started, let's have a look to the logs:
-
-![logs](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig32.png)
-
-Logs looks good! So we can now use the browser to access to Rancher.
-
-![webui](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig33.png)
-
-Congrats!
+![fig33](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig33.png)
