@@ -122,7 +122,7 @@ Once it's done, you can delete it
 
 Remove the environement doesn't remove the containers on the hosts, so you have to do it manually on each host. Use the following command (twice):
 
-`$ docker ps -aq|docker rm -vf`
+`$ docker ps -aq|xargs docker rm -vf`
 
 `docker ps -aq` print only the CONTAINER ID of running and stopped containers; `docker rm -fv` remove the container, even if it's a running one, and all volumes
 
