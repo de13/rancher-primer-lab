@@ -17,7 +17,7 @@ The VM will run RancherOS v0.8.1. (OS installation is part of this lab.)
 
 In the course material, you'll find the private key (`rancher-primer-lab.pem`) to access to VMs without password once they will be set up. [Download](https://github.com/de13/rancher-primer-lab/blob/master/keys/rancher-primer-lab.pem) the file in `~/.ssh/` and set rights to 0400.
 
-The course material also provides you with a `config` file to falicitate access to VMs over `ssh`. Copy this file to `~/.ssh/config` on your computer, and **set perms to 0600** on the file. [Download](https://github.com/de13/rancher-primer-lab/blob/master/config) the file.
+The course material also provides you with a `config` file to falicitate access to VMs over `ssh`. Copy this file to `~/.ssh/config` on your computer, and **set perms to 0600** on the file. [Download](https://github.com/de13/rancher-primer-lab/blob/master/config-vbox) the file.
 
 ## Lab objectives
 

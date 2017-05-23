@@ -1,0 +1,7 @@
+Host rancher
+ User rancher
+ HostName localhost
+ Port 22022
+ IdentityFile ~/.ssh/rancher-primer-lab.pem
+ UserKnownHostsFile=/dev/null
+ StrictHostKeyChecking=no
