@@ -111,3 +111,5 @@ In the storage tab, yoou can see the volume mounted on the container
 Install `curl` and try to perform `curl localhost` to see `index.html` file you previously created!
 
 ![fig17](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab8/fig17.png)
+
+
