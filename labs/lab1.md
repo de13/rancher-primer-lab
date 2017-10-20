@@ -163,7 +163,7 @@ It's time to start rancher/server
 docker run -d --restart=unless-stopped \
   -p 8080:8080 rancher/server:v1.4.3 \
   --db-host 10.0.2.15 --db-port 3306 \
-  --db-user cattle --db-pass cattle --db-name cattle
+  --db-user rancher --db-pass rancher --db-name rancher
 ```
 
 ![fig24](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab1/fig24.png)
