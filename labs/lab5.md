@@ -3,21 +3,19 @@
 ## Network topology
 
 ```
-                 rancherxx.data-essential.eu
+                            server
                     +-------------------+
-                    |     rancherxx     |
-                    |   172.31.1.x/24   |
-                    | rancher + mariadb |
+                    |  rancher/server + |
+                    |     mariadb +     |
+                    |   rancher/client  |
                     +-------------------+
 
- lbxx.data-essential.eu
-   +-----------------+  +-----------------+  +-----------------+
-   |     hostxx-a    |  |    hostxx-b     |  |    hostxx-c     |
-   |  172.31.1.x/24  |  | 172.31.50.x/24  |  | 172.31.100.x/24 |
-   |    front-end    |  |    back-end 1   |  |   back-end 2    |
-   +-----------------+  +-----------------+  +-----------------+
+           +-----------------+  +-----------------+
+           |     client1     |  |    client2      |
+           |  rancher/client |  |  rancher/client |
+           |                 |  |                 |
+           +-----------------+  +-----------------+
 ```
-Where `xx` is your student number (eg. 01, 02 and so on)
 
 ## Info
 
