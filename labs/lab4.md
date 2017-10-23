@@ -66,7 +66,7 @@ You can try different command to gather data on your configuration; for example,
  - `rancher ps`
  - `rancher ps -c`
  - `rancher hosts`
- - `rancher --host hostxx-a ps`
+ - `rancher --host hostxx-a docker ps`
 
 ![fig06](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab4/fig06.png)
 
