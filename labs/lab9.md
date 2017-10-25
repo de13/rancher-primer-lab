@@ -1,5 +1,6 @@
-#Lab9
-##Network topology
+# Lab9
+
+## Network topology
 
 
 ```
@@ -17,7 +18,7 @@
            +-----------------+  +-----------------+
 ```
 
-##Info
+## Info
 
 This lab is planned to run on AWS. All ec2 are ready to use. Each student should use the config file (`~/.ssh/config`) provided in the course material and `.pem` file provided by the instructor to access to hosts over ssh.
 
@@ -25,7 +26,7 @@ This lab is planned to run on AWS. All ec2 are ready to use. Each student should
 
 Rancher UI will be available through http://rancherxx.data-essential.eu:8080 one rancher/server will be installed (rancher/server install is part of this lab).
 
-##Lab goals
+## Lab goals
 
 A distributed system is designed for failure.
 
@@ -40,7 +41,7 @@ Deploy and configure a resilient App, and experience it againt:
  
 Learn to perform Rancher Database backups and restores
 
-##Install myApp
+## Install myApp
 
 MyApp is a resilient Node.js app, with a MongoDB backend. For persistence, MongoDB use a rancher-ebs driver.
 
@@ -67,7 +68,8 @@ MyApp is a resilient Node.js app, with a MongoDB backend. For persistence, Mongo
            +-----------------+  +-----------------+
 ```
 
-###Note:
+### Note:
+
 In this configuration MongoDB is not in HA, the EBS backend only ensure data persistence.
 
 Add [https://github.com/saphoooo/rancher-catalog.git](https://github.com/saphoooo/rancher-catalog.git) as a Catalog.
@@ -93,7 +95,7 @@ Now, stop the node where MongoDB is not running (so only Node.js). What happens?
 ## Backup and Restore Rancher's Database
 
 
-###Backup
+### Backup
 
 Did you notice that you can remove every piece of the Rancher puzzle without breaking it? It always recovers from failures. But the database is the master piece. You must be sure to use an high available configuration (MariaDB HA or Galera). Futhermore you must perform backups on regular basis (once a day at least). If everything goes wrong, yoou can recover your entire environment from your database.
 
@@ -119,7 +121,7 @@ From your local conputer, copy your dump.
 
 Your runtime environment is now safe!
 
-###Chaos!
+### Chaos!
 
 It's time to break everything!
 
@@ -131,7 +133,7 @@ Bad news, you have totaly lost your environment, go back to lab1, an recreate ev
 
 ![fig7](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab9/fig7.png)
 
-###Restore
+### Restore
 
 You have first to create the database, so run a MariaDB container.
 
