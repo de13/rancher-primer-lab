@@ -32,7 +32,7 @@ You remember myApp? It was nice to have a full stack deployed by clicking only o
 
 In this lab you'll deploy Traefik, a Cloud Native Reverse Proxy/Load Balancer.
 
-You'll then how to automatically configure your routes when deploying your app.
+You'll see then how to automatically configure your routes when deploying your app.
 
 
 ## myApp Architecture (20000ft)
