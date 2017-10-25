@@ -160,8 +160,8 @@ Now that your database is ready, run rancher/server.
 ```
 docker run -d --restart=unless-stopped \
   -p 8080:8080 rancher/server --db-host ${internal_host_ip} \
-  --db-port 3306   --db-user rancher --db-pass rancher \
-  --db-name rancher
+  --db-port 3306   --db-user cattle --db-pass cattle \
+  --db-name cattle
 ```
 
 Once the server if ready, connect to the Web UI.
