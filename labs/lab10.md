@@ -121,7 +121,7 @@ Now, let's deploy the new stack.
 
 ![fig10](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab10/fig10.png)
 
-And, once deployed, I can directly check in my browser for my app (on port 8080, it's the port defined for Traefik).
+And, once deployed, I can directly check in my browser for my app (on port 8080, it's the defined port for Traefik).
 
 ![fig11](https://s3-eu-west-1.amazonaws.com/data-essential-rancher-primer-lab/lab10/fig11.png)
 
