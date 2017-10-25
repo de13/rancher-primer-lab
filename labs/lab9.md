@@ -141,7 +141,7 @@ You have first to create the database, so run a MariaDB container.
 docker run -d -p 3306:3306 --restart=unless-stopped \
    -e MYSQL_DATABASE=cattle -e MYSQL_ALLOW_EMPTY_PASSWORD=true \
    -e MYSQL_USER=cattle -e MYSQL_PASSWORD=cattle \
-   mariadb:v10.3
+   mariadb:10.3
 ```
 
 Push your dump on your server.
